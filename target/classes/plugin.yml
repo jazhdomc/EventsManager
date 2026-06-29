@@ -1,0 +1,47 @@
+name: EventsManager
+version: 0.1.0
+description: The plugin used in the events server of JazhdoMC.
+author: jazhdo
+main: mc.jazhdo.EventsManager
+
+depend: []
+softdepend: []
+
+commands:
+  events:
+    description: To check or edit events
+    usage: /events [edit]
+    aliases: []
+  join:
+    description: To join the current event
+    usage: /join
+    aliases: [go]
+  leaderboard:
+    description: Check the structure of the tournament
+    usage: /leaderboard
+    aliases: [lb]
+  leave:
+    description: To leave the current event
+    usage: /leave
+    aliases: []
+  view:
+    description: Spectate a game
+    usage: /view
+    aliases: [see]
+
+permissions:
+  events.events:
+    description: Check the status on future or current events
+    default: true
+  events.join:
+    description: Join the event
+    default: true
+  events.leaderboard:
+    description: Check the rounds that have happened
+    default: true
+  events.leave:
+    description: Leave the event
+    default: true
+  events.view:
+    description: Spectate games
+    default: true

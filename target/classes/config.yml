@@ -1,0 +1,77 @@
+# The configuration file for the EventsManager plugin
+
+# Upcoming event(s) (Format: EVENT NAME-GAME NAME-MM/DD/YYYY-HH:MM (first MM is month and second is minute))
+upcoming:
+  - "Bridge Battle Test Run-bridge-06/29/2026-10:30"
+  - "4th Of July Bridge Battle-bridge-07/04/2026-14:00"
+
+# Spawn
+spawn:
+  x: 0
+  y: 65
+  z: 0
+  yaw: 0
+  pitch: 0
+
+# World name
+worldname: EventsLobby
+
+# Welcome message shown when a player joins the server
+welcome-msg: "Welcome to the Events Server!\nUse the command /events to check when the next event is"
+
+# Message shown to everyone when a player joins the event (%p is the player name)
+join-msg: "%p has joined the event!"
+
+# Message shown to everyone when a player leaves the event (%p is the player name)
+leave-msg: "%p has left the event!"
+
+# Bridge game config
+bridge:
+  # Winning score
+  winning: 6
+
+  # Cage config
+  cage:
+    # How big each cage is
+    size:
+      # Height is the entire height of the cage
+      height: 4
+
+      # Half lengths are the distance from the center block to the edge (not including the center)
+      x-half-length: 2
+      y-half-length: 2
+
+    # Cage locations (What your coordinates say when you stand on the center block of the cage)
+    red:
+      x: 0
+      y: 98
+      z: -37
+    blue:
+      x: 0
+      y: 98
+      z: 37
+
+  # Team Spawn Locations
+  red:
+    x: 0
+    y: 98
+    z: -37
+    yaw: 0
+    pitch: 0
+  blue:
+    x: 0
+    y: 98
+    z: 37
+    yaw: 180
+    pitch: 0
+
+  # Portal y-level (the y-level of the end-portal blocks that represent the goals)
+  portal-y: 91
+
+  # Void y-level (the y-level of the simulated void)
+  void-y: 83
+
+  # Maps to randomly select from
+  maps:
+    - BridgeMap1
+    - BridgeMap2
