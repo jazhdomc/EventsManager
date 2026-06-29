@@ -8,9 +8,9 @@ depend: []
 softdepend: []
 
 commands:
-  events:
-    description: To check or edit events
-    usage: /events [edit]
+  event:
+    description: To check on the current or next event
+    usage: /event
     aliases: []
   join:
     description: To join the current event
@@ -30,7 +30,7 @@ commands:
     aliases: [see]
 
 permissions:
-  events.events:
+  events.event:
     description: Check the status on future or current events
     default: true
   events.join:

@@ -17,7 +17,7 @@ spawn:
 worldname: EventsLobby
 
 # Welcome message shown when a player joins the server
-welcome-msg: "Welcome to the Events Server!\nUse the command /events to check when the next event is"
+welcome-msg: "Welcome to the Events Server!\nUse the command /event to check when the next event is and /help EventsManager to see all the commands"
 
 # Message shown to everyone when a player joins the event (%p is the player name)
 join-msg: "%p has joined the event!"

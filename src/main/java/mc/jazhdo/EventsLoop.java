@@ -132,13 +132,13 @@ public class EventsLoop {
                         }
 
                         // Check if its 1m, 5m, 10m, 30m, or 1hr before
-                        long timeTill = ChronoUnit.MINUTES.between(now, saidTime);
+                        long timeTill = ChronoUnit.SECONDS.between(now, saidTime);
                         String timeMsg = switch (Long.toString(timeTill)) {
-                            case "1" -> "1 Minute";
-                            case "5" -> "5 Minutes";
-                            case "10" -> "10 Minutes";
-                            case "30" -> "30 Minutes";
-                            case "60" -> "1 Hour";
+                            case "60" -> "1 Minute";
+                            case "300" -> "5 Minutes";
+                            case "600" -> "10 Minutes";
+                            case "1800" -> "30 Minutes";
+                            case "3600" -> "1 Hour";
                             default -> null;
                         };
 

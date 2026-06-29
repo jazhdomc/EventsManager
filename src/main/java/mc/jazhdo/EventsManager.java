@@ -65,12 +65,12 @@ public class EventsManager extends JavaPlugin {
                 case "leaderboard" -> {
                     // Get msg
                     String text = buildLeaderboard();
-                    if (!loop.gameActive()) text = "No event is currently active. Type \"/events\" in chat to learn more.";
+                    if (!loop.gameActive()) text = "No event is currently active. Type \"/event\" in chat to learn more.";
 
                     // Send to player
                     player.spigot().sendMessage(new TextComponent(text));
                 }
-                case "events" -> {
+                case "event" -> {
                     // Set correct message
                     String text;
                     List<String> upcoming = config.getStringList("upcoming");
@@ -87,7 +87,7 @@ public class EventsManager extends JavaPlugin {
                 case "view" -> {
                     // Send a error if no event is currently active
                     if (!loop.gameActive()) {
-                        player.sendMessage("No event is currently active. Check the next event by typing \"/events\" in chat.");
+                        player.sendMessage("No event is currently active. Check the next event by typing \"/event\" in chat.");
                         return true;
                     }
 
