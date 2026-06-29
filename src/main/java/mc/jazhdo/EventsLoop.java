@@ -13,6 +13,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.md_5.bungee.api.chat.TextComponent;
+
 public class EventsLoop {
     private final EventsManager plugin;
     private EventsListener listener;
@@ -61,21 +63,39 @@ public class EventsLoop {
         return rounds.getLast();
     }
 
+    // Send game end msgs if needed and return true, else return false;
+    public Boolean checkEnd() {
+        // Check if game is not ending
+        List<String> playerlist = listener.getPlayerlist();
+        int playerlistSize = playerlist.size();
+        if (playerlistSize > 1) return false;
+
+        // Get right winner msg
+        String winnerMsg = switch (playerlist.size()) {
+            case 0 -> "No winner found. Everybody who was left had left.";
+            case 1 -> ChatColor.GREEN + "Winner: ".concat(playerlist.get(0));
+            default -> "Error. Number of players in event is negative.";
+        };
+
+        // Get leaderboard msg
+        String leaderboardMsg = plugin.buildLeaderboard();
+
+        // Send both messages
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(winnerMsg);
+            player.spigot().sendMessage(new TextComponent(leaderboardMsg));
+        }
+
+        // Clear rounds so game is not active
+        rounds.clear();
+        
+        // Say that the game ended
+        return true;
+    }
+
     public void setupRound() {
         List<String> playerlist = new ArrayList<>(listener.getPlayerlist());
-        int playerlistSize = playerlist.size();
-        if (playerlistSize <= 1) {
-            String winnerMsg = switch (playerlistSize) {
-                case 0 -> "No winner found. Everybody who was left had left.";
-                case 1 -> ChatColor.GREEN + "Winner: ".concat(playerlist.get(0));
-                default -> "Error. Number of players in event is negative.";
-            };
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendMessage(winnerMsg);
-                player.sendMessage(plugin.buildLeaderboard());
-            }
-            rounds.clear();
-        } else {
+        if (!checkEnd()) {
             int roundNumber = rounds.size();
             rounds.add(new ArrayList<>());
             for (int i = 0; playerlist.size() > 1; i++) {
@@ -104,7 +124,7 @@ public class EventsLoop {
                 LocalDateTime now = LocalDateTime.now();
                 if (rounds.isEmpty()) {
                     List<String> upcoming = config.getStringList("upcoming");
-                        now = now.truncatedTo(ChronoUnit.MINUTES);
+                    now = now.truncatedTo(ChronoUnit.SECONDS);
                     for (String whole : upcoming) {
                         // Break down the encoded date and time
                         List<String> parsed = parseEventString(whole);
@@ -134,6 +154,11 @@ public class EventsLoop {
                         // Check if its 1m, 5m, 10m, 30m, or 1hr before
                         long timeTill = ChronoUnit.SECONDS.between(now, saidTime);
                         String timeMsg = switch (Long.toString(timeTill)) {
+                            case "1" -> "1";
+                            case "2" -> "2";
+                            case "3" -> "3";
+                            case "10" -> "10 Seconds";
+                            case "30" -> "30 Seconds";
                             case "60" -> "1 Minute";
                             case "300" -> "5 Minutes";
                             case "600" -> "10 Minutes";

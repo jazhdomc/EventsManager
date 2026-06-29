@@ -49,13 +49,14 @@ public abstract class GameSession {
 
     // Ends the game
     public void endGame(String loser) {
-        winner = getOtherPlayer(loser);
-        if (winner == null) {
-            winner = getPlayer(winningPlayer());
-            if (winner == null) winner = "";
+        if ((winner = getOtherPlayer(loser)) == null)
+            if ((winner = getPlayer(winningPlayer())) == null) winner = "";
+        if (!winner.equals("")) {
+            String playername = getOtherPlayer(winner).toLowerCase();
+            if (!listener.getPlayerlist().remove(playername)) plugin.getLogger().warning("Could not remove player ".concat(playername).concat(" from playerlist. (They lost the game)"));
         }
-        if (!winner.equals("")) listener.getPlayerlist().remove(getOtherPlayer(winner).toLowerCase());
         showEnd(winner);
+        plugin.getLoop().checkEnd();
         scheduler.runTaskLater(plugin, this::finalEnd, 100);
     }
 
@@ -129,6 +130,7 @@ public abstract class GameSession {
 
     // Get the winner's playerNumber
     private int getWinnerPlayerNumber() {
+        if (winner == null) return 0;
         if (winner.equalsIgnoreCase(player1)) return 1;
         else if (winner.equalsIgnoreCase(player2)) return 2;
         else if (winner.equals("")) return 4;

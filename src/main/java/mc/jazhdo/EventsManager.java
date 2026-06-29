@@ -78,7 +78,7 @@ public class EventsManager extends JavaPlugin {
                     else if (upcoming.isEmpty()) text = "No events found.";
                     else {
                         List<String> event = loop.parseEventString(upcoming.get(0));
-                        text = "Next Event: ".concat(event.get(1)).concat("\nGame: ").concat(capitalize(event.get(2))).concat("\nDate: ").concat(LocalDateTime.parse(event.get(0)).format(DateTimeFormatter.ofPattern("MM/dd/yyyy at HH:mm")));
+                        text = "Next Event: ".concat(event.get(1)).concat("\nGame: ").concat(capitalize(event.get(2))).concat("\nDate: ").concat(LocalDateTime.parse(event.get(0)).format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' HH:mm")));
                     }
 
                     // Send message
@@ -127,13 +127,18 @@ public class EventsManager extends JavaPlugin {
         }
     }
 
+    // Returns the loop reference
+    public EventsLoop getLoop() {
+        return loop;
+    }
+
     // Build the leaderboard
     public String buildLeaderboard() {
         String text = "";
         List<List<GameSession>> rounds = loop.getRounds();
         for (int i = 0; i < rounds.size(); i++) {
             List<GameSession> game = rounds.get(i);
-            text += ChatColor.GOLD + "\nRound ".concat(Integer.toString(i + 1));
+            text += "\n".concat(ChatColor.GOLD + "Round ").concat(Integer.toString(i + 1));
             for (GameSession session : game) {
                 String player1 = session.getPlayer1();
                 String player2 = session.getPlayer2();
@@ -198,7 +203,7 @@ public class EventsManager extends JavaPlugin {
         loop.start();
         OnCommand commands = new OnCommand(this, loop);
         getServer().getPluginManager().registerEvents(listener, this);
-        for (String cmd : List.of("join", "events", "leaderboard", "leave", "view")) getCommand(cmd).setExecutor(commands);
+        for (String cmd : List.of("join", "event", "leaderboard", "leave", "view")) getCommand(cmd).setExecutor(commands);
     }
 
     @Override
