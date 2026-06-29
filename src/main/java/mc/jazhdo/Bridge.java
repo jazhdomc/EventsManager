@@ -99,6 +99,11 @@ public class Bridge extends GameSession {
         }.runTaskTimer(plugin, 0L, 20L);
     }
 
+    @Override
+    public String getConfigPrefix() {
+        return "bridge.";
+    }
+
     private void respawnPlayer(Player player) {
         // Get team
         int playerNumber = getPlayerNumber(player.getName());

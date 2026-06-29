@@ -158,7 +158,7 @@ public abstract class GameSession {
     // Start the game
     public void start() {
         // Get a map
-        List<String> maps = config.getStringList("maps");
+        List<String> maps = config.getStringList(getConfigPrefix().concat("maps"));
         if (maps.isEmpty()) {
             plugin.getLogger().warning("No maps found");
             return;
@@ -210,4 +210,5 @@ public abstract class GameSession {
     public abstract void onPlayerDeath(PlayerDeathEvent event);
     public abstract void onBlockBreak(BlockBreakEvent event);
     public abstract void onBlockPlace(BlockPlaceEvent event);
+    public abstract String getConfigPrefix();
 }
